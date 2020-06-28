@@ -1,0 +1,31 @@
+version: "3"
+services:
+  db:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_DB: proofviewer
+      POSTGRES_PASSWORD: proofviewerpassword
+      POSTGRES_USER: proofviewer
+    logging:
+      driver: "none"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - proofviewernet
+
+  proofviewer:
+    image: samdickinson/proofviewer:latest
+    environment:
+      DB: db:5432
+    volumes:
+      - proof-files:/proofviewer/content
+    networks:
+      - proofviewernet
+      - default
+    ports: 8090:8090
+
+networks:
+  proofviewernet:
+
+volumes:
+  db-data:

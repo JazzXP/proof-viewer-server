@@ -1,0 +1,21 @@
+# .gqlgen.yml example
+#
+# Refer to https://gqlgen.com/config/
+# for detailed .gqlgen.yml documentation.
+
+schema:
+  - schema.graphql
+exec:
+  filename: proofviewer/generated.go
+  package: proofviewer
+model:
+  filename: proofviewer/models_gen.go
+  package: proofviewer
+resolver:
+  filename: proofviewer/resolver.go
+  package: proofviewer
+  type: Resolver
+autobind: []
+models:
+  Proof:
+    model: github.com/jazzxp/proofviewer.Proof
