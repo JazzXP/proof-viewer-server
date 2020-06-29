@@ -7,7 +7,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/JazzXP/proofviewer_server/proofviewer"
+	"github.com/JazzXP/proof-viewer-server/proofviewer"
 )
 
 const defaultPort = "8090"

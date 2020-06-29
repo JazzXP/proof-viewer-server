@@ -1,4 +1,4 @@
-module github.com/JazzXP/proofviewer_server
+module github.com/JazzXP/proof-viewer-server
 
 go 1.14
 

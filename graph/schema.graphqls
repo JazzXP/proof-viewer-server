@@ -5,15 +5,33 @@
 type User {
   email: String!
   name: String!
+  galleries: [ProofGallery]
 }
 
-type Proof {
+type GalleryImage {
+  file: String!
+  thumbnail: String
+}
+
+type ProofGallery {
   id: ID!
-  name: String!
+  uploadDate: Int!
+  userAccess: [User],
+	images: [GalleryImage!]!
+	shortlist: [GalleryImage],
+	favourites: [GalleryImage]
 }
 
 type Query {
-  proofs: [Proof!]
-  shortlist: [String!]
-  favourites: [String!]
+  proofs: [ProofGallery!]
+}
+
+type Mutation {
+  addToShortlist(proofId: ID!, image: String): [GalleryImage]
+  removeFromShortlist(proofId: ID!, image: String): [GalleryImage]
+  addToFavourites(proofId: ID!, image: String): [GalleryImage]
+  removeFromFavourites(proofId: ID!, image: String): [GalleryImage]
+
+  addGalleryAccess(proofId: ID!, email: String): [ProofGallery]
+  removeGalleryAccess(proofId: ID!, email: String): [ProofGallery]
 }
