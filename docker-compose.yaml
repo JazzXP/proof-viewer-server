@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 services:
   db:
     image: postgres:12-alpine
@@ -6,6 +6,11 @@ services:
       POSTGRES_DB: proofviewer
       POSTGRES_PASSWORD: proofviewerpassword
       POSTGRES_USER: proofviewer
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     logging:
       driver: "none"
     volumes:
@@ -14,18 +19,29 @@ services:
       - proofviewernet
 
   proofviewer:
-    image: samdickinson/proofviewer:latest
+    image: samdickinson/proof-viewer-server:latest
     environment:
-      DB: db:5432
+      DB_HOST: db
+      DB_PORT: 5432
+      POSTGRES_DB: proofviewer
+      POSTGRES_PASSWORD: proofviewerpassword
+      POSTGRES_USER: proofviewer
     volumes:
       - proof-files:/proofviewer/content
     networks:
       - proofviewernet
       - default
-    ports: 8090:8090
+    ports:
+      - 8090:8090
+    healthcheck:
+      test: ["CMD", "/docker-health-check", "-url=http://127.0.0.1:8090/health"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
 
 networks:
   proofviewernet:
 
 volumes:
   db-data:
+  proof-files:

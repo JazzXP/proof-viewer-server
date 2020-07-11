@@ -8,6 +8,6 @@ graphql:
 	go run github.com/99designs/gqlgen generate
 
 build:
-	docker build -t samdickinson/proofviewer:latest .
+	docker build -t samdickinson/proof-viewer-server:latest .
 
 .PHONY: run build test graphql
